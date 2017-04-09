@@ -8,7 +8,7 @@
 
 import sys
 from struct import unpack
-import paho.mqtt.publish as publish
+import paho.mqtt.client as mqtt
 from gattlib import DiscoveryService, GATTRequester, GATTResponse
 
 verbose = True
@@ -18,6 +18,10 @@ devices = service.discover(5)
 
 baseTopic = "/miflower/"
 msgs=[]
+
+mqttc = mqtt.Client("miflora_1")
+#mqttc.username_pw_set("<your userid>","<your password>")
+mqttc.connect("localhost", 1883)
 
 for address, name in list(devices.items()):
     try:
@@ -50,5 +54,11 @@ for address, name in list(devices.items()):
     except:
         print "Error during reafing:", sys.exc_info()[0]
 
-if (len(msgs) > 0):
-	publish.multiple(msgs, hostname="localhost", port=1883, client_id="miflower", keepalive=60,will=None, auth=None, tls=None)
+print "------------- publishing ",len(msgs)," messages: ---------------"
+
+for msg in msgs:
+    mqttc.publish(msg['topic'], msg['payload'])
+
+mqttc.loop(2)
+
+print "----------------------- done --------------------------"
