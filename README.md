@@ -13,6 +13,16 @@ pip install paho-mqtt
 pip install gattlib
 ```
 
+In case that gattlib can't be installed, make sure that you also apt-get it's dependencies :
+```
+pkg-config
+libboost-python-dev
+libboost-thread-dev
+libbluetooth-dev >= 4.101
+libglib2.0-dev
+python-dev
+```
+
 this requires Bluez 5.37 or higher to be installed as well
 
 To run this as non-root run the following
