@@ -14,7 +14,7 @@ from gattlib import DiscoveryService, GATTRequester, GATTResponse
 verbose = True
 
 service = DiscoveryService("hci0")
-devices = service.discover(15)
+devices = service.discover(5)
 
 baseTopic = "/miflower/"
 msgs=[]
